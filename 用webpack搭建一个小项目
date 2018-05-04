@@ -1,0 +1,22 @@
+1.用webpack搭建项目首先要先了解webpack的一些特性，比如入口文件（entry），出口文件（output），loaders（模块加载），pligins（插件），devServer（服务）
+  
+  等等，详细知识还请各位砖友去webpack官网了解，讲解的很详细。
+
+2.第一步，需要一个配置文件，package.json，直接在命令行 执行npm init，名字需要是英文，然后直接就是一直 enter就ok了。
+
+3.然后安装你所需要的依赖项，在你的项目中也需要安装一次webpack，将webpack安装到你的项目中，cnpm install webpack --save-dev / -D,此处不探讨--save-dev
+   
+   与 --save的区别，详情还请砖友自己查阅一下。
+   
+4.webpack中需要有webpack.config.js这个默认的配置文件 ，不然无法执行webpack指令，
+   
+   在自己项目中创建一个webpack.config.js文件。
+   
+   module.exports = {
+      entry: './main.js', //入口文件
+      output: {
+        path: __dirname + '/dist', //指定文件所在目录下的dist文件夹中
+        filename: 'bundle.js' //出口文件的名称
+      }
+   }
+   会将main.js打包到dist文件夹下并命名为bundle.js
