@@ -19,4 +19,9 @@
         filename: 'bundle.js' //出口文件的名称
       }
    }
+   在命令行中执行webpack命令
    会将main.js打包到dist文件夹下并命名为bundle.js
+   
+   如果是最新版本的webpack，此时会让你安装webpack-cli 你需要cnpm install webpack-cli -D
+   
+   然后在package.json中的script中加上一句话 "build": "webpack" 然后再命令行中执行npm run build 恭喜你执行完成了
