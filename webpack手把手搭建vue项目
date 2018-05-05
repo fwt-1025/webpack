@@ -1,0 +1,77 @@
+1.上面已经有了webpack的安装步骤，以及webpack的配置信息等，接下来进入我们的重点。
+
+2. 首先在当前文件下打开cmd命令行。安装cnpm install vue-loader vue-template-compiler babel-plugin-transform-runtime --save-dev 
+    
+   以及cnpm install vue --save,此时只是安装了这些，这时候打开package.json你会发现devDependencies中多了这三项 以及dependencies多了 vue
+   
+3. 安装好了，这时候就该配置文件，解析.vue文件了，打开webpack.config.js 加上这一段代码 
+
+   module : {
+      loaders: [
+         {
+           test: /\.vue$/,
+           loader: 'vue-loader'
+         }
+      ]
+   }
+   
+4.由于vue中使用的语法大部分基于es6，现阶段大部分浏览器对es6的支持性不是很好，所以我们要安装一个专门用来将es6解析为es5的插件 'babel',
+   
+  接下来 我们打开命令行 输入命令 cnpm install babel-loader babel-core babel-preset-es2015 --save-dev
+  
+  继续，大家应该都知道了，安装了就该配置了，打开webpack.config.js 继续在上面的module中添加内容，由于解析的时js文件所以
+  
+    module : {
+      loaders: [
+         {
+           test: /\.vue$/,
+           loader: 'vue-loader'
+         },
+         {
+          test: /\.js$/,
+          loader: 'babel-loader',
+          exclude: [node_modules] //此句话意思是去除node_modules中的解析，因为安装了babel，在babel中已经编译了，为了避免两者发生冲突，
+          就需要禁掉[node_modules]
+         }
+      ]
+   },
+   babel:{
+      persets: ['es2015'],//配置将es6语法转换成es5语法,配合vue使用
+      plugins: ['transform-runtime']
+   }
+  5.web中肯定会有css样式 less等，以及url路径，这些webpack也是无法识别的，所以我们就需要安装插件。
+     安装 cnpm i css-loader style-loader less less-loader url-loader file-loader --save-dev
+     配置文件
+     module : {
+      loaders: [
+          {
+  			    test: /\.css$/,  //打包 .css文件
+  			    loader:'style-loader!css-loader'
+          },
+           {
+            test: /\.less/,  //打包 .less文件
+            loader:'style-loader!css-loader!less-loader'
+          }
+          ,
+           {
+            test: /\.(png|jpg|gif|ttf)$/,  //打包 url请求的资源文件
+            loader:'url-loader?limit=20000' //limit表示图片的大小为20K是临界值，小于20K的图片均被打包到build.js中去，请求图片就会很快
+          },
+         {
+           test: /\.vue$/,
+           loader: 'vue-loader'
+         },
+         {
+          test: /\.js$/,
+          loader: 'babel-loader',
+          exclude: [node_modules] //此句话意思是去除node_modules中的解析，因为安装了babel，在babel中已经编译了，为了避免两者发生冲突，
+          就需要禁掉[node_modules]
+         }
+      ]
+   },
+   babel:{
+      persets: ['es2015'],//配置将es6语法转换成es5语法,配合vue使用
+      plugins: ['transform-runtime']
+   }
+   
+   6.安装html-webpack-plugin 解析html 安装 cnpm i html-webpack-plugin --save-dev
