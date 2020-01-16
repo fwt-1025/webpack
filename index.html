@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+  }
+  body{
+    font-size: 16px;
+    line-height: normal !important;
+    font-family: "PingFangSC-Regular, Helvetica Neue, Helvetica, Microsoft YaHei, arial, sans-serif";
+    -webkit-text-size-adjust: 100% !important;
+  }
+  div{
+    box-sizing: border-box;
+  }
+  input{
+    outline: none;
+    border: 0;
+  }
+  </style>
+  <script>
+    
+    function pxToRem() {
+        var dpr;
+        var rem;
+        // let scale;
+        var docEl = document.documentElement;
+        // const metaEl = document.querySelector('meta[name="viewport"]');
+        dpr = window.devicePixelRatio || 1;
+        var w = docEl.getBoundingClientRect().width;
+        rem = 100 * (w / 375);
+        // scale = 1 / dpr;
+        // 设置viewport，进行缩放，达到高清效果
+        // metaEl.setAttribute('content', 'width=device-width,initial-scale=' + scale + ',maximum-scale=' + scale + ', minimum-scale=' + scale + ',user-scalable=no');
+        // 设置data-dpr属性，留作的css hack之用，解决图片模糊问题和1px细线问题
+        docEl.setAttribute('data-dpr', dpr);
+        // 动态写入样式
+        docEl.setAttribute('style', 'font-size:' + rem + 'px');
+    }
+    pxToRem();
+    var timer = null;
+    window.addEventListener('resize', function () {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+            pxToRem();
+            document.body.setAttribute('style', 'visibility:visible');
+            timer = null;
+        }, 50);
+    });
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>
